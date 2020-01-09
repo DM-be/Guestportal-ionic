@@ -4,7 +4,7 @@
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
     <ion-title>
-      Home
+      Register
     </ion-title>
   </ion-toolbar>
 </ion-header>
@@ -25,34 +25,16 @@
 
 <ion-item>
   <ion-label position="floating">Email</ion-label>
-  <ion-input></ion-input>
+  <ion-input type="email"></ion-input>
 </ion-item>
 
 
 <ion-item>
   <ion-label position="floating">Password</ion-label>
-  <ion-input></ion-input>
+  <ion-input type="password"></ion-input>
 </ion-item>
 
-<ion-item>
-  <ion-label position="floating"></ion-label>
-  <ion-input></ion-input>
-</ion-item>
-
-
-<ion-item>
-  <ion-label position="floating">Floating Label</ion-label>
-  <ion-input></ion-input>
-</ion-item>
-
-
-
-
-<ion-item>
-  <ion-label position="floating">Floating Label</ion-label>
-  <ion-input></ion-input>
-</ion-item>
-
+<ion-auto-complete [dataProvider]="visiteeAutoCompleteService" [options]="{ placeholder : 'Visitee' }"></ion-auto-complete>
 
 
 

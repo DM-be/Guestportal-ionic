@@ -4,30 +4,48 @@ import { HttpClient } from "@angular/common/http";
 import { ActiveDirectoryUser } from "../models/ActiveDirectoryUser";
 import Axios, { AxiosResponse, AxiosError, AxiosRequestConfig } from "axios";
 import { environment } from "src/environments/environment";
-import "rxjs/add/operator/map";
-import "rxjs/add/operator/pipe";
+import { map } from "rxjs/operators";
+import { pipe, Observable } from "rxjs";
+import { BehaviorSubject } from "rxjs";
 
 @Injectable({
   providedIn: "root"
 })
 export class VisiteeAutoCompleteService implements AutoCompleteService {
-  private activeDirectoryUsers: ActiveDirectoryUser[];
+  private activeDirectoryUsers: BehaviorSubject<ActiveDirectoryUser[]>;
+  labelAttribute = 'email';
+  formValueAttribute = 'name';
 
-  constructor(private http: HttpClient) {
-    this.initializeActiveDirectoryUsers();
+  constructor() {
+   // this.initializeActiveDirectoryUsers();
+   this.generateTestUsers();
+  }
+
+  public generateTestUsers() {
+    this.activeDirectoryUsers = new BehaviorSubject([{
+      email: "testemail",
+      name: "Dennis"
+    },
+    {
+      email: "testemail",
+      name: "Lukas"
+    },
+  ] as ActiveDirectoryUser [])
   }
 
   public async initializeActiveDirectoryUsers(): Promise<void> {
     try {
       const url = `${environment.backend_url}/ad/`;
       let axiosResponse: AxiosResponse = await Axios.get(url); // 204
-      this.activeDirectoryUsers = (await axiosResponse.data) as ActiveDirectoryUser[];
+      this.activeDirectoryUsers = new BehaviorSubject(
+        axiosResponse.data as ActiveDirectoryUser[]
+      );
     } catch (error) {
       console.log("could not get activedirectory users ", error);
     }
   }
 
-  getResults(keyword: string) {
+  public getResults(keyword: string): Observable<any> | boolean{
     if (!keyword) {
       return false;
     }

@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { VisiteeAutoCompleteService } from '../services/visitee-auto-complete.service';
 
 @Component({
   selector: 'app-home',
@@ -7,6 +8,6 @@ import { Component } from '@angular/core';
 })
 export class HomePage {
 
-  constructor() {}
+  constructor(public visiteeAutoCompleteService: VisiteeAutoCompleteService) {}
 
 }
