@@ -2,9 +2,16 @@
 // `ng build --prod` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
 
+export const ise_environment = {
+  portal: "27041710-2e58-11e9-98fb-0050568775a3"
+}
+
+
 export const environment = {
   production: false,
-  backend_url: ""
+  backend_url: "",
+  portal: "27041710-2e58-11e9-98fb-0050568775a3",
+  ise_login_url: `https://10.0.20.2:8443/portal/PortalSetup.action?portal=${ise_environment.portal}`
 };
 
 /*

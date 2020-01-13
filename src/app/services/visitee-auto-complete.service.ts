@@ -13,24 +13,25 @@ import { BehaviorSubject } from "rxjs";
 })
 export class VisiteeAutoCompleteService implements AutoCompleteService {
   private activeDirectoryUsers: BehaviorSubject<ActiveDirectoryUser[]>;
-  labelAttribute = 'email';
-  formValueAttribute = 'name';
+  labelAttribute = "email";
+  formValueAttribute = "name";
 
   constructor() {
-   // this.initializeActiveDirectoryUsers();
-   this.generateTestUsers();
+    // this.initializeActiveDirectoryUsers();
+    this.generateTestUsers();
   }
-
+zz
   public generateTestUsers() {
-    this.activeDirectoryUsers = new BehaviorSubject([{
-      email: "testemail",
-      name: "Dennis"
-    },
-    {
-      email: "testemail",
-      name: "Lukas"
-    },
-  ] as ActiveDirectoryUser [])
+    this.activeDirectoryUsers = new BehaviorSubject([
+      {
+        email: "testemail",
+        name: "Dennis"
+      },
+      {
+        email: "testemail",
+        name: "Lukas"
+      }
+    ] as ActiveDirectoryUser[]);
   }
 
   public async initializeActiveDirectoryUsers(): Promise<void> {
@@ -45,11 +46,11 @@ export class VisiteeAutoCompleteService implements AutoCompleteService {
     }
   }
 
-  public getResults(keyword: string): Observable<any> | boolean{
+  public getResults(keyword: string): Observable<any> | boolean {
     if (!keyword) {
       return false;
     }
-    return this.activeDirectoryUsers.pipe(
+    return this.activeDirectoryUsers.asObservable().pipe(
       map((result: any[]) => {
         return result.filter(item => {
           return item.name.toLowerCase().startsWith(keyword.toLowerCase());
