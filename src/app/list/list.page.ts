@@ -1,39 +1,26 @@
-import { Component, OnInit } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  ViewChild,
+  ElementRef,
+  AfterContentInit,
+  AfterViewInit
+} from "@angular/core";
+import { QrScanService } from "../services/qr-scan.service";
 
 @Component({
-  selector: 'app-list',
-  templateUrl: 'list.page.html',
-  styleUrls: ['list.page.scss']
+  selector: "app-list",
+  templateUrl: "list.page.html",
+  styleUrls: ["list.page.scss"]
 })
-export class ListPage implements OnInit {
-  private selectedItem: any;
-  private icons = [
-    'flask',
-    'wifi',
-    'beer',
-    'football',
-    'basketball',
-    'paper-plane',
-    'american-football',
-    'boat',
-    'bluetooth',
-    'build'
-  ];
-  public items: Array<{ title: string; note: string; icon: string }> = [];
-  constructor() {
-    for (let i = 1; i < 11; i++) {
-      this.items.push({
-        title: 'Item ' + i,
-        note: 'This is item #' + i,
-        icon: this.icons[Math.floor(Math.random() * this.icons.length)]
-      });
-    }
-  }
+export class ListPage implements AfterViewInit {
+  @ViewChild("videoRef", {static: false}) videoRef: ElementRef;
 
-  ngOnInit() {
+  constructor(private qrScanService: QrScanService) {}
+  ngOnInit() {}
+
+  async ngAfterViewInit() {
+    console.log(this.videoRef)
+   await this.qrScanService.scanCode(this.videoRef);
   }
-  // add back when alpha.4 is out
-  // navigate(item) {
-  //   this.router.navigate(['/list', JSON.stringify(item)]);
-  // }
 }
